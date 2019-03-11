@@ -1,0 +1,29 @@
+create database ip_pool;
+
+SELECT * FROM emp;
+use ip_pool;
+
+select * from txt;
+
+drop table if exists pool;
+create table pool(
+  id int(255) auto_increment primary key ,
+  start_ip  varchar(15) comment '起始ip' unique ,
+  last_ip varchar(15) comment '结束ip' unique ,
+  address varchar(255) comment 'ip真实地址'
+) comment 'ip地址表';
+
+drop table if exists txt;
+create table txt(
+  information varchar(255) comment 'IP地址信息'
+) comment '测试';
+
+load data local infile 'd:/ip.txt'
+into table ip_pool.pool
+fields terminated by  ',' (start_ip,last_ip,address)
+set id = null ;
+
+SHOW VARIABLES LIKE '%local%';
+SET GLOBAL local_infile=1;
+
+select * from pool;
